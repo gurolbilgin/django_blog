@@ -1,0 +1,12 @@
+<h1>BLOGS</h1>
+    <!-- usage of object_list is obligatory convention in class view rendering on the template -->
+{% for blog in object_list  %}
+  <hr>
+  <div>
+    <a href="{% url 'details' blog.pk %}"><h4>TITLE: {{blog.title}}</h4></a>
+    <h6>AUTHOR: {{blog.author.first_name}} {{blog.author.last_name}}</h6>
+  </div>
+  <hr>
+{% endfor %}
+  
+
