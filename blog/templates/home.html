@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}  
 <h1>BLOGS</h1>
     <!-- usage of object_list is obligatory convention in class view rendering on the template -->
 {% for blog in object_list  %}
@@ -9,4 +12,4 @@
   <hr>
 {% endfor %}
   
-
+{% endblock content %}

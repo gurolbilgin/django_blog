@@ -1,7 +1,19 @@
-<h1>{{post.title}}</h1>
-<small>By: {{post.author.first_name}} {{post.author.last_name}}</small>
-<br>
-<hr>
-<br>
-<h6>CONTENT</h6>
-<p>{{post.content}}</p>
+{% extends 'base.html' %}
+
+
+{% block title %}
+  {{post.title_tag}}
+{% endblock title %}
+  
+
+{% block content %}
+  <h1>{{post.title}}</h1>
+  <small>By: {{post.author.first_name}} {{post.author.last_name}}</small>
+  <br>
+  <hr>
+  <br>
+  <h6>CONTENT</h6>
+  <p>{{post.content}}</p>
+
+{% endblock content %}
+  
