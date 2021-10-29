@@ -20,9 +20,11 @@ def add_blog(request):
     if request.method == 'POST':
         form = Post_create_form(request.POST, request.FILES)
         if form.is_valid():
-            # post creates form and waits and does not send to database
+            # post creates form and waits and does not send to the database
+            #  we are waiting until creating the user before submitting the form  we are not just asking the users their name we are just craeting their name in the database automatically
             post = form.save(commit=False)
             post.author = request.user
+
             form.save()
             return redirect('home')
 
@@ -32,28 +34,37 @@ def add_blog(request):
 # CONTENT DETAIL
 
 def detailed_blog(request, id):
-    blog = Post.objects.all(id=id)
-    return render(request, 'blog/details.html', {'blog': blog})
+    blog = Post.objects.get(id=id)
+    return render(request, 'details.html', {'blog': blog})
 
 
 # UPDATE BLOG
 
 def update_blog(request, id):
-    blog = Post.objects.all(id=id)
-    post = Post
+    blog = Post.objects.get(id=id)
+
+    form = Post_create_form(instance=blog)
 
     if request.method == 'POST':
-        post = Post(request.POST, request.FILES)
-        if post.is_valid():
-            post.save()
+        form = Post_create_form(request.POST, request.FILES, instance=blog)
+        if form.is_valid():
+            form.save()
             return redirect('home')
 
     context = {
-        'blog': blog, 'post': post
+        'blog': blog, 'form': form
     }
 
-    return render(request, 'blog/update.html', context)
+    return render(request, 'update.html', context)
 
     # DELETE BLOG
 
-    # def delete_blog(request, id):
+
+def delete_blog(request, id):
+    blog = Post.objects.get(id=id)
+
+    if request.method == 'POST':
+        blog.delete()
+        return redirect('home')
+
+    return render(request, 'delete.html', {'blog': blog})

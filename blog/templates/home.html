@@ -8,6 +8,8 @@
   <div>
     <a href="{% url 'details' blog.id %}"><h4>TITLE: {{blog.title}}</h4></a>
     <h6>AUTHOR: {{blog.author}}</h6>
+    <p>{{blog.content}}</p>
+    <img src="{{blog.image.url}}" alt="blog's cover picture" style="width: 30rem;">
   </div>
   <hr>
 {% endfor %}
