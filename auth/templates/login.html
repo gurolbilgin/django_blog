@@ -1,0 +1,27 @@
+<form>
+  <div class="row mb-3">
+    {{% csrf_token %}}
+    <label for="username" class="col-sm-2 col-form-label">Username</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="username">
+    </div>
+  </div>
+  <div class="row mb-3">
+    <label for="password" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" name="password">
+    </div>
+  </div>
+
+ <div>
+      <button type="submit" class="btn btn-outline-primary">Login</button>
+      <a href="#">Forgot Password?</a>
+ </div>
+
+ <hr>
+<div>
+  <p>Need an account? </p>
+</div>
+
+
+</form>
