@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-# media impoirts
+# media imports
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -24,8 +24,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
-
-
+    # the following line is used for django's ready to go package for user authentication
+    path('users/', include('django.contrib.auth.urls')),
+    path('users/', include('user_auth.urls')),
 ]
 
 # this following line is added for initiating the media files
