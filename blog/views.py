@@ -9,7 +9,7 @@ from .forms import Post_create_form
 
 def home(request):
     blogs = Post.objects.all()
-    return render(request, 'home.html', {'blogs': blogs})
+    return render(request, 'blog/home.html', {'blogs': blogs})
 
 
 # ADD BLOG

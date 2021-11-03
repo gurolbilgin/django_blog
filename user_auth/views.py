@@ -8,4 +8,4 @@ from django.contrib import messages
 
 
 def user_login(request):
-    return render(request, 'login.html', {})
+    return render(request, 'user_auth/login.html', {})
