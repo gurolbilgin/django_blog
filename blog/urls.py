@@ -1,11 +1,11 @@
 from django.urls import path
-from .views import delete_blog, home, add_blog, detailed_blog, update_blog
+from .views import home,  post_create, post_delete, post_detail, post_update
 
 urlpatterns = [
-    # class based url views here using as_view() is the thing needed to be watched for
+
     path('', home, name='home'),
-    # path('add_blog/',  add_blog, name='add_blog'),
-    # path('details/<int:id>', detailed_blog, name='details'),
-    # path('update/<int:id>', update_blog, name='update'),
-    # path('delete/<int:id>', delete_blog, name='delete'),
+    path('create/',  post_create, name='post_create'),
+    path('<str:slug>/', post_detail, name='post_details'),
+    path('<str:slug>/update/', post_update, name='post_update'),
+    path('<str:slug>/delete', post_delete, name='post_delete'),
 ]

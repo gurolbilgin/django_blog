@@ -1,17 +1,35 @@
+
 {% extends 'base.html' %}
 
-{% block content %}  
-<h1>BLOGS</h1>
-    <!-- usage of object_list is obligatory convention in class view rendering on the template -->
-{% for blog in  blogs %}
-  <hr>
-  <div>
-    <a href="{% url 'details' blog.id %}"><h4>TITLE: {{blog.title}}</h4></a>
-    <h6>AUTHOR: {{blog.author}}</h6>
-    <p>{{blog.content}}</p>
-    <img src="{{blog.image.url}}" alt="blog's cover picture" style="width: 30rem;">
-  </div>
-  <hr>
-{% endfor %}
-  
+
+{% block content %}
+<h1 style="text-align: center;">BLOGS</h1>
+<div class="row mt-5" >
+    {% for blog in  blogs %}
+    <div class="col-4">
+        <div class="card shadow p-3 mb-5 bg-white rounded" style="width: 18rem; height: 25rem; ">
+            <img src="{{blog.image.url}}" alt="blog's cover"  class="card-img-top"  style="width:15rem; height: 11rem; align-self:center;">
+
+            <hr>
+            <div class="card-body">
+                <h5 class="card-title"><a href="{% url 'post_details' blog.slug %}"><h4>TITLE: {{blog.title}}</h4></a></h5>
+                <p class="card-text">{{blog.content|truncatechars:20}}</p>
+                <p>
+                    <span><i class="far fa-comment-alt ml-2"></i>{{ blog.comment_count }}</span>
+                    <span><i class="fas fa-eye ml-2"></i>{{ blog.view_count }}</span>
+                    <span><i class="far fa-heart ml-2"></i>{{ blog.like_count }}</span>
+                <p class="card-text"><small>
+                        Posted {{ blog.created_date|timesince }} ago.
+                    </small>
+                </p>
+
+                </p>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+</div>
 {% endblock content %}
+
+

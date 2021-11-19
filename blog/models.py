@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.db.models.deletion import CASCADE
+from django.db.models.fields.related import ForeignKey
 
 
 # the path function for media files
@@ -23,8 +25,6 @@ class Post(models.Model):
     STATUS = [('d', 'Draft'), ('p', 'Publish')]
 
     title = models.CharField(max_length=200)
-    title_tag = models.CharField(
-        max_length=30, default='A Blogpost!!!', blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     content = models.TextField()
     image = models.ImageField(
@@ -33,10 +33,49 @@ class Post(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     status = models.CharField(max_length=10, choices=STATUS, default="d")
-
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
-
     slug = models.SlugField(blank=True, unique=True)
 
     def __str__(self):
-        return str(self.author) + ' | ' + self.title
+        return self.title
+
+
+# Comment class is used by writing below as lowercase comment
+#  this method is being used for reaching parent from a child
+
+    def comment_count(self):
+        return self.comment_set.all().count()
+# PostView class is used by writing below as lowercase comment
+
+    def view_count(self):
+        return self.postview_set.all().count()
+
+    def like_count(self):
+        return self.like_set.all().count()
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    time_stamp = models.DateTimeField(auto_now_add=True)
+    content = models.TextField()
+
+    def __str__(self):
+        return self.user.username
+
+
+class Like(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.username
+
+
+class PostView(models.Model):
+    user = models.ForeignKey(User, on_delete=CASCADE)
+    post = models.ForeignKey(Post, on_delete=CASCADE)
+    time_stamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username
