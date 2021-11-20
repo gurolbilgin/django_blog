@@ -1,7 +1,7 @@
 from django.http import request
 from django.shortcuts import get_object_or_404, render, redirect
-from .models import Post
-from .forms import PostForm
+from .models import Like, Post
+from .forms import CommentForm, PostForm
 # Create your views here.
 
 
@@ -23,7 +23,7 @@ def post_create(request):
             post = form.save(commit=False)
             post.author = request.user
             # then
-            form.save()
+            post.save()
             return redirect('home')
 
     return render(request, 'post_create.html', {'form': form})
@@ -31,8 +31,18 @@ def post_create(request):
 
 # CONTENT DETAIL
 def post_detail(request, slug):
+    form = CommentForm()
     blog = get_object_or_404(slug=slug)
-    return render(request, 'post_create.html', {'blog': blog})
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.post = blog
+            comment.save()
+            return redirect('post_detail', slug=slug)
+
+    return render(request, 'post_detail.html', {'blog': blog, 'form': form})
 
 
 # UPDATE BLOG
@@ -56,3 +66,16 @@ def post_delete(request, slug):
         blog.delete()
         return redirect('home')
     return render(request, 'post_delete.html', {'blog': blog})
+
+# LIKE COUNT
+
+
+def like(request, slug):
+    if request.method == 'POST':
+        obj = get_object_or_404(Post, slug=slug)
+        like_qs = Like.objects.filter(user=request.user, post=obj)
+        if like_qs.exists():
+            like_qs[0].delete()
+        else:
+            Like.objects.create(user=request.user, post=obj)
+        return redirect('post_detail', slug=slug)
