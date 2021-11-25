@@ -12,7 +12,7 @@
 
             <hr>
             <div class="card-body">
-                <h5 class="card-title"><a href="{% url 'post_details' blog.slug %}"><h4>TITLE: {{blog.title}}</h4></a></h5>
+                <h5 class="card-title"><a href="{% url 'details' blog.slug %}"><h4>TITLE: {{blog.title}}</h4></a></h5>
                 <p class="card-text">{{blog.content|truncatechars:20}}</p>
                 <p>
                     <span><i class="far fa-comment-alt ml-2"></i>{{ blog.comment_count }}</span>

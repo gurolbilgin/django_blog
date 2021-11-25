@@ -1,14 +1,19 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% load crispy_forms_tags %} 
 
 {% block title %}Create A New Blog{% endblock title %}
-  
-{% block content %}  
 
-<h1>ADD NEW BLOG</h1>
-  <form  method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{form.as_p}}
-    <button type="submit" class="btn btn-warning">Post</button>
-  </form>
-  
+{% block content %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h3>CREATE A NEW BLOG</h3>
+    <hr />
+    <form method="POST" enctype="multipart/form-data">   
+      {% csrf_token %} {{form|crispy}}
+      <br />
+      <button type="submit" class="btn btn-outline-info">Post</button>
+    </form>
+  </div>
+</div>
+
 {% endblock content %}
