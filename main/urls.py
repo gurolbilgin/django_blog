@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('blog.urls')),
     # the following line is used for django's ready to go package for user authentication
-    path('users/', include('django.contrib.auth.urls')),
+    # path('users/', include('django.contrib.auth.urls')),
     path('users/', include('user_auth.urls')),
 ]
 
